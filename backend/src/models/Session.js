@@ -10,6 +10,7 @@ const sessionSchema = new mongoose.Schema({
   color: { type: String },
   seats: { type: Number },
   live: { type: Boolean, default: false },
+  registered_users: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
   status: { type: String, enum: ['scheduled', 'ongoing', 'completed', 'cancelled'], default: 'scheduled' }
 }, {
   timestamps: true,

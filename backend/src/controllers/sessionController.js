@@ -1,40 +1,56 @@
 const sessionService = require('../services/sessionService');
 const { successResponse } = require('../utils/response');
 
-exports.getAll = async (req, res, next) => {
+exports.createSession = async (req, res, next) => {
   try {
-    const data = await sessionService.getAll(req.query);
+    const session = await sessionService.createSession(req.body);
+    return successResponse(res, 201, 'Session created successfully', session);
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.getSessions = async (req, res, next) => {
+  try {
+    const data = await sessionService.getSessions(req.query);
     return successResponse(res, 200, 'Sessions retrieved successfully', data);
-  } catch (error) { next(error); }
+  } catch (error) {
+    next(error);
+  }
 };
 
-exports.getById = async (req, res, next) => {
+exports.getSessionById = async (req, res, next) => {
   try {
-    const data = await sessionService.getById(req.params.id);
-    if (!data) return res.status(404).json({ success: false, message: 'Not found' });
-    return successResponse(res, 200, 'Session retrieved successfully', data);
-  } catch (error) { next(error); }
+    const session = await sessionService.getSessionById(req.params.id);
+    return successResponse(res, 200, 'Session retrieved successfully', session);
+  } catch (error) {
+    next(error);
+  }
 };
 
-exports.create = async (req, res, next) => {
+exports.updateSession = async (req, res, next) => {
   try {
-    const data = await sessionService.create(req.body);
-    return successResponse(res, 201, 'Session created successfully', data);
-  } catch (error) { next(error); }
+    const session = await sessionService.updateSession(req.params.id, req.body);
+    return successResponse(res, 200, 'Session updated successfully', session);
+  } catch (error) {
+    next(error);
+  }
 };
 
-exports.update = async (req, res, next) => {
+exports.registerForSession = async (req, res, next) => {
   try {
-    const data = await sessionService.update(req.params.id, req.body);
-    if (!data) return res.status(404).json({ success: false, message: 'Not found' });
-    return successResponse(res, 200, 'Session updated successfully', data);
-  } catch (error) { next(error); }
+    const session = await sessionService.registerForSession(req.params.id, req.body.userId || req.user.id);
+    return successResponse(res, 200, 'Successfully registered for session', session);
+  } catch (error) {
+    next(error);
+  }
 };
 
-exports.delete = async (req, res, next) => {
+exports.deleteSession = async (req, res, next) => {
   try {
-    const data = await sessionService.delete(req.params.id);
-    if (!data) return res.status(404).json({ success: false, message: 'Not found' });
-    return successResponse(res, 200, 'Session deleted successfully', null);
-  } catch (error) { next(error); }
+    await sessionService.deleteSession(req.params.id);
+    return successResponse(res, 200, 'Session deleted successfully');
+  } catch (error) {
+    next(error);
+  }
 };
