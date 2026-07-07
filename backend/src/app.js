@@ -48,6 +48,7 @@ const registrationRoutes = require('./routes/registrationRoutes');
 const qrPassRoutes = require('./routes/qrPassRoutes');
 const sponsorRoutes = require('./routes/sponsorRoutes');
 const announcementRoutes = require('./routes/announcementRoutes');
+const leadRoutes = require('./routes/leadRoutes');
 
 // Mount Routes
 app.use('/api/v1/auth', authRoutes);
@@ -62,6 +63,7 @@ app.use('/api/v1/registrations', registrationRoutes);
 app.use('/api/v1/qrpasses', qrPassRoutes);
 app.use('/api/v1/sponsors', sponsorRoutes);
 app.use('/api/v1/announcements', announcementRoutes);
+app.use('/api/v1/leads', leadRoutes);
 app.use('/api/v1/exhibitors', exhibitorRoutes);
 app.use('/api/v1/products', productRoutes);
 app.use('/api/v1/sessions', sessionRoutes);
