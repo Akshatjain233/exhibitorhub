@@ -11,7 +11,12 @@ const qrPassSchema = new mongoose.Schema({
   expires_at: { type: Date },
   check_ins: [{
     timestamp: { type: Date, default: Date.now },
-    location: { type: String }, // e.g., "Main Entrance", "Hall A"
+    location: { type: String },
+    scanned_by: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
+  }],
+  check_outs: [{
+    timestamp: { type: Date, default: Date.now },
+    location: { type: String },
     scanned_by: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
   }]
 }, { timestamps: true });
