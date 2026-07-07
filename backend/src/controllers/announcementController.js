@@ -1,40 +1,54 @@
 const announcementService = require('../services/announcementService');
 const { successResponse } = require('../utils/response');
 
-exports.getAll = async (req, res, next) => {
+exports.createAnnouncement = async (req, res, next) => {
   try {
-    const data = await announcementService.getAll(req.query);
+    const announcement = await announcementService.createAnnouncement(req.body);
+    return successResponse(res, 201, 'Announcement created successfully', announcement);
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.getAnnouncements = async (req, res, next) => {
+  try {
+    // If user is visitor or exhibitor, auto-filter their targetAudience
+    const query = { ...req.query };
+    if (req.user && ['visitor', 'exhibitor'].includes(req.user.role)) {
+      query.targetAudience = req.user.role;
+      query.status = 'published';
+    }
+    
+    const data = await announcementService.getAnnouncements(query);
     return successResponse(res, 200, 'Announcements retrieved successfully', data);
-  } catch (error) { next(error); }
+  } catch (error) {
+    next(error);
+  }
 };
 
-exports.getById = async (req, res, next) => {
+exports.getAnnouncementById = async (req, res, next) => {
   try {
-    const data = await announcementService.getById(req.params.id);
-    if (!data) return res.status(404).json({ success: false, message: 'Not found' });
-    return successResponse(res, 200, 'Announcement retrieved successfully', data);
-  } catch (error) { next(error); }
+    const announcement = await announcementService.getAnnouncementById(req.params.id);
+    return successResponse(res, 200, 'Announcement retrieved successfully', announcement);
+  } catch (error) {
+    next(error);
+  }
 };
 
-exports.create = async (req, res, next) => {
+exports.updateAnnouncement = async (req, res, next) => {
   try {
-    const data = await announcementService.create(req.body);
-    return successResponse(res, 201, 'Announcement created successfully', data);
-  } catch (error) { next(error); }
+    const announcement = await announcementService.updateAnnouncement(req.params.id, req.body);
+    return successResponse(res, 200, 'Announcement updated successfully', announcement);
+  } catch (error) {
+    next(error);
+  }
 };
 
-exports.update = async (req, res, next) => {
+exports.deleteAnnouncement = async (req, res, next) => {
   try {
-    const data = await announcementService.update(req.params.id, req.body);
-    if (!data) return res.status(404).json({ success: false, message: 'Not found' });
-    return successResponse(res, 200, 'Announcement updated successfully', data);
-  } catch (error) { next(error); }
-};
-
-exports.delete = async (req, res, next) => {
-  try {
-    const data = await announcementService.delete(req.params.id);
-    if (!data) return res.status(404).json({ success: false, message: 'Not found' });
-    return successResponse(res, 200, 'Announcement deleted successfully', null);
-  } catch (error) { next(error); }
+    await announcementService.deleteAnnouncement(req.params.id);
+    return successResponse(res, 200, 'Announcement deleted successfully');
+  } catch (error) {
+    next(error);
+  }
 };
