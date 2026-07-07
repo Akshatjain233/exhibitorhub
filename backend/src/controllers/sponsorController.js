@@ -1,40 +1,47 @@
 const sponsorService = require('../services/sponsorService');
 const { successResponse } = require('../utils/response');
 
-exports.getAll = async (req, res, next) => {
+exports.createSponsor = async (req, res, next) => {
   try {
-    const data = await sponsorService.getAll(req.query);
+    const sponsor = await sponsorService.createSponsor(req.body);
+    return successResponse(res, 201, 'Sponsor created successfully', sponsor);
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.getSponsors = async (req, res, next) => {
+  try {
+    const data = await sponsorService.getSponsors(req.query);
     return successResponse(res, 200, 'Sponsors retrieved successfully', data);
-  } catch (error) { next(error); }
+  } catch (error) {
+    next(error);
+  }
 };
 
-exports.getById = async (req, res, next) => {
+exports.getSponsorById = async (req, res, next) => {
   try {
-    const data = await sponsorService.getById(req.params.id);
-    if (!data) return res.status(404).json({ success: false, message: 'Not found' });
-    return successResponse(res, 200, 'Sponsor retrieved successfully', data);
-  } catch (error) { next(error); }
+    const sponsor = await sponsorService.getSponsorById(req.params.id);
+    return successResponse(res, 200, 'Sponsor retrieved successfully', sponsor);
+  } catch (error) {
+    next(error);
+  }
 };
 
-exports.create = async (req, res, next) => {
+exports.updateSponsor = async (req, res, next) => {
   try {
-    const data = await sponsorService.create(req.body);
-    return successResponse(res, 201, 'Sponsor created successfully', data);
-  } catch (error) { next(error); }
+    const sponsor = await sponsorService.updateSponsor(req.params.id, req.body);
+    return successResponse(res, 200, 'Sponsor updated successfully', sponsor);
+  } catch (error) {
+    next(error);
+  }
 };
 
-exports.update = async (req, res, next) => {
+exports.deleteSponsor = async (req, res, next) => {
   try {
-    const data = await sponsorService.update(req.params.id, req.body);
-    if (!data) return res.status(404).json({ success: false, message: 'Not found' });
-    return successResponse(res, 200, 'Sponsor updated successfully', data);
-  } catch (error) { next(error); }
-};
-
-exports.delete = async (req, res, next) => {
-  try {
-    const data = await sponsorService.delete(req.params.id);
-    if (!data) return res.status(404).json({ success: false, message: 'Not found' });
-    return successResponse(res, 200, 'Sponsor deleted successfully', null);
-  } catch (error) { next(error); }
+    await sponsorService.deleteSponsor(req.params.id);
+    return successResponse(res, 200, 'Sponsor deleted successfully');
+  } catch (error) {
+    next(error);
+  }
 };

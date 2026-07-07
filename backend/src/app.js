@@ -46,6 +46,7 @@ const floorMapRoutes = require('./routes/floorMapRoutes');
 const visitorRoutes = require('./routes/visitorRoutes');
 const registrationRoutes = require('./routes/registrationRoutes');
 const qrPassRoutes = require('./routes/qrPassRoutes');
+const sponsorRoutes = require('./routes/sponsorRoutes');
 
 // Mount Routes
 app.use('/api/v1/auth', authRoutes);
@@ -58,6 +59,7 @@ app.use('/api/v1/floormaps', floorMapRoutes);
 app.use('/api/v1/visitors', visitorRoutes);
 app.use('/api/v1/registrations', registrationRoutes);
 app.use('/api/v1/qrpasses', qrPassRoutes);
+app.use('/api/v1/sponsors', sponsorRoutes);
 app.use('/api/v1/exhibitors', exhibitorRoutes);
 app.use('/api/v1/products', productRoutes);
 app.use('/api/v1/sessions', sessionRoutes);

@@ -1,19 +1,14 @@
 const mongoose = require('mongoose');
 
 const sponsorSchema = new mongoose.Schema({
+  exhibition: { type: mongoose.Schema.Types.ObjectId, ref: 'Exhibition', required: true },
   name: { type: String, required: true },
-  tier: { type: String, enum: ['Platinum', 'Gold', 'Silver', 'Bronze'], default: 'Silver' },
+  category: { type: String, enum: ['platinum', 'gold', 'silver', 'bronze', 'partner', 'media'], default: 'partner' },
   logoUrl: { type: String },
-  website: { type: String },
-  exhibitionId: { type: mongoose.Schema.Types.ObjectId, ref: 'Exhibition', required: true },
-  createdAt: { type: Date, default: Date.now }
-}, {
-  toJSON: { virtuals: true },
-  toObject: { virtuals: true }
-});
-
-sponsorSchema.virtual('id').get(function() {
-  return this._id.toHexString();
-});
+  websiteUrl: { type: String },
+  description: { type: String },
+  priority: { type: Number, default: 0 },
+  isVisible: { type: Boolean, default: true }
+}, { timestamps: true });
 
 module.exports = mongoose.model('Sponsor', sponsorSchema);
