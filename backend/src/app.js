@@ -42,6 +42,7 @@ const chatRoutes = require('./routes/chatRoutes');
 const venueRoutes = require('./routes/venueRoutes');
 const hallRoutes = require('./routes/hallRoutes');
 const boothRoutes = require('./routes/boothRoutes');
+const floorMapRoutes = require('./routes/floorMapRoutes');
 
 // Mount Routes
 app.use('/api/v1/auth', authRoutes);
@@ -50,6 +51,7 @@ app.use('/api/v1/chat', chatRoutes);
 app.use('/api/v1/venues', venueRoutes);
 app.use('/api/v1/halls', hallRoutes);
 app.use('/api/v1/booths', boothRoutes);
+app.use('/api/v1/floormaps', floorMapRoutes);
 app.use('/api/v1/exhibitors', exhibitorRoutes);
 app.use('/api/v1/products', productRoutes);
 app.use('/api/v1/sessions', sessionRoutes);
