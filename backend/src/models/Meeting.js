@@ -2,13 +2,12 @@ const mongoose = require('mongoose');
 
 const meetingSchema = new mongoose.Schema({
   exhibition: { type: mongoose.Schema.Types.ObjectId, ref: 'Exhibition', required: true },
-  organizer: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }, // The user who requested the meeting
-  invitee: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }, // The user who is invited
-  start_time: { type: Date, required: true },
-  end_time: { type: Date, required: true },
-  status: { type: String, enum: ['pending', 'accepted', 'declined', 'cancelled', 'completed'], default: 'pending' },
-  location: { type: String }, // e.g., "Booth 12A", "Networking Lounge"
-  booth: { type: mongoose.Schema.Types.ObjectId, ref: 'Booth' }, // If meeting is at a specific booth
+  requester: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+  recipient: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+  status: { type: String, enum: ['pending', 'accepted', 'declined', 'cancelled'], default: 'pending' },
+  scheduledAt: { type: Date, required: true },
+  durationMinutes: { type: Number, default: 30 },
+  location: { type: String },
   agenda: { type: String },
   notes: { type: String }
 }, { timestamps: true });
