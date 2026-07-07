@@ -10,6 +10,8 @@ const exhibitorSchema = new mongoose.Schema({
   description: { type: String },
   tagline: { type: String },
   logo: { type: String },
+  gallery: [{ type: String }],
+  brochure_url: { type: String },
   verified: { type: Boolean, default: false },
   featured: { type: Boolean, default: false },
   status: { type: String, enum: ['pending', 'approved', 'rejected', 'active', 'inactive'], default: 'pending' },
