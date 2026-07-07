@@ -46,8 +46,7 @@ const floorMapRoutes = require('./routes/floorMapRoutes');
 const visitorRoutes = require('./routes/visitorRoutes');
 const registrationRoutes = require('./routes/registrationRoutes');
 const qrPassRoutes = require('./routes/qrPassRoutes');
-const sponsorRoutes = require('./routes/sponsorRoutes');
-const announcementRoutes = require('./routes/announcementRoutes');
+
 const leadRoutes = require('./routes/leadRoutes');
 const meetingRoutes = require('./routes/meetingRoutes');
 const bookmarkRoutes = require('./routes/bookmarkRoutes');
@@ -84,8 +83,7 @@ app.use('/api/v1/sessions', sessionRoutes);
 app.use('/api/v1/gallery', galleryRoutes);
 app.use('/api/v1/documents', documentRoutes);
 app.use('/api/v1/exhibitions', exhibitionRoutes);
-app.use('/api/v1/sponsors', sponsorRoutes);
-app.use('/api/v1/announcements', announcementRoutes);
+
 app.use('/api/v1/organizers', organizerRoutes);
 app.use('/api/v1/platform-settings', platformSettingRoutes);
 
