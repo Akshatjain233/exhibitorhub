@@ -40,12 +40,14 @@ const platformSettingRoutes = require('./routes/platformsettingRoutes');
 const adminRoutes = require('./routes/adminRoutes');
 const chatRoutes = require('./routes/chatRoutes');
 const venueRoutes = require('./routes/venueRoutes');
+const hallRoutes = require('./routes/hallRoutes');
 
 // Mount Routes
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/admin', adminRoutes);
 app.use('/api/v1/chat', chatRoutes);
 app.use('/api/v1/venues', venueRoutes);
+app.use('/api/v1/halls', hallRoutes);
 app.use('/api/v1/exhibitors', exhibitorRoutes);
 app.use('/api/v1/products', productRoutes);
 app.use('/api/v1/sessions', sessionRoutes);
