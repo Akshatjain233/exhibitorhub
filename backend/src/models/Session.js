@@ -1,15 +1,16 @@
 const mongoose = require('mongoose');
 
 const sessionSchema = new mongoose.Schema({
-  time: { type: String },
+  exhibition: { type: mongoose.Schema.Types.ObjectId, ref: 'Exhibition', required: true },
+  hall: { type: mongoose.Schema.Types.ObjectId, ref: 'Hall' },
   title: { type: String, required: true },
   type: { type: String },
-  color: { type: String },
-  speaker: { type: String },
-  hall: { type: String },
+  time: { type: String },
   duration: { type: String },
-  seats: { type: String },
-  live: { type: Boolean, default: false }
+  color: { type: String },
+  seats: { type: Number },
+  live: { type: Boolean, default: false },
+  status: { type: String, enum: ['scheduled', 'ongoing', 'completed', 'cancelled'], default: 'scheduled' }
 }, {
   timestamps: true,
   toJSON: { virtuals: true },

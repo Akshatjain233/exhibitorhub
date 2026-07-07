@@ -1,0 +1,18 @@
+Server is running on port 3001
+✅ MongoDB connected successfully
+(node:92996) [MONGOOSE] Warning: mongoose: Duplicate schema index on {"email":1} for model "User". This is often due to declaring an index using both "index: true" and "schema.index()". Please remove the duplicate index definition.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:92996) [MONGOOSE] Warning: mongoose: Duplicate schema index on {"user":1} for model "SupplierProfile". This is often due to declaring an index using both "index: true" and "schema.index()". Please remove the duplicate index definition.
+(node:92996) [MONGOOSE] Warning: mongoose: Duplicate schema index on {"user":1} for model "ConsumerProfile". This is often due to declaring an index using both "index: true" and "schema.index()". Please remove the duplicate index definition.
+(node:92996) [MONGOOSE] Warning: mongoose: Duplicate schema index on {"user":1} for model "ArtisanProfile". This is often due to declaring an index using both "index: true" and "schema.index()". Please remove the duplicate index definition.
+📝 Registration request received: {
+  name: 'Email Test',
+  email: 'emailtest@example.com',
+  phone_number: '+919999999999',
+  password: 'password',
+  role: 'consumer',
+  preferred_language: 'en',
+  selected_interests: [ 'Pottery', 'Textiles', 'Jewelry' ]
+}
+✅ Email sent successfully to: emailtest@example.com
+✅ OTP sent to email: emailtest@example.com
