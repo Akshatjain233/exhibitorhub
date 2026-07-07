@@ -1,31 +1,35 @@
-const Activity = require('../models/Activity');
-const Product = require('../models/Product');
+const dashboardService = require('../services/dashboardService');
+const { successResponse } = require('../utils/response');
 
-// Matches frontend kpis
-// [ { label: 'Products', value: '24' }, ... ]
-exports.getKpis = async (req, res, next) => {
+exports.getDashboard = async (req, res, next) => {
   try {
-    // In a real scenario we count actual documents, here we can mock some or do actual counts
-    const productCount = await Product.countDocuments();
-    
-    const kpis = [
-      { label: 'Products', value: productCount.toString() },
-      { label: 'Gallery', value: '18' },
-      { label: 'Documents', value: '6' },
-      { label: 'Announcements', value: '4' },
-    ];
-    res.json(kpis);
-  } catch (error) {
-    next(error);
-  }
-};
+    const { role, id } = req.user;
+    const exhibitionId = req.query.exhibition; // Required for most dashboards except super admin
 
-// Matches frontend activities list
-exports.getActivities = async (req, res, next) => {
-  try {
-    const activities = await Activity.find().sort({ createdAt: -1 });
-    res.json(activities);
+    let dashboardData;
+
+    switch (role) {
+      case 'super_admin':
+        dashboardData = await dashboardService.getSuperAdminDashboard();
+        break;
+      case 'exhibition_admin':
+        dashboardData = await dashboardService.getExhibitionAdminDashboard(exhibitionId);
+        break;
+      case 'exhibitor':
+        dashboardData = await dashboardService.getExhibitorDashboard(exhibitionId, id);
+        break;
+      case 'visitor':
+        dashboardData = await dashboardService.getVisitorDashboard(exhibitionId, id);
+        break;
+      default:
+        return res.status(403).json({ success: false, message: 'Invalid role for dashboard' });
+    }
+
+    return successResponse(res, 200, 'Dashboard data retrieved successfully', dashboardData);
   } catch (error) {
+    if (error.message.includes('required')) {
+      error.statusCode = 400;
+    }
     next(error);
   }
 };
