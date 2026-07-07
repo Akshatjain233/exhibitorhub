@@ -6,7 +6,11 @@ const productSchema = new mongoose.Schema({
   name: { type: String, required: true },
   description: { type: String },
   imageUrl: { type: String },
+  gallery: [{ type: String }],
+  brochure_url: { type: String },
   category: { type: String },
+  featured: { type: Boolean, default: false },
+  approvalStatus: { type: String, enum: ['pending', 'approved', 'rejected'], default: 'pending' },
   status: { type: String, enum: ['active', 'inactive'], default: 'active' }
 }, {
   timestamps: true,

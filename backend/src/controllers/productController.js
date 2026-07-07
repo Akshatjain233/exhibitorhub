@@ -1,40 +1,56 @@
 const productService = require('../services/productService');
 const { successResponse } = require('../utils/response');
 
-exports.getAll = async (req, res, next) => {
+exports.createProduct = async (req, res, next) => {
   try {
-    const data = await productService.getAll(req.query);
+    const product = await productService.createProduct(req.body, req.user.id, req.user.role);
+    return successResponse(res, 201, 'Product created successfully', product);
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.getProducts = async (req, res, next) => {
+  try {
+    const data = await productService.getProducts(req.query);
     return successResponse(res, 200, 'Products retrieved successfully', data);
-  } catch (error) { next(error); }
+  } catch (error) {
+    next(error);
+  }
 };
 
-exports.getById = async (req, res, next) => {
+exports.getProductById = async (req, res, next) => {
   try {
-    const data = await productService.getById(req.params.id);
-    if (!data) return res.status(404).json({ success: false, message: 'Not found' });
-    return successResponse(res, 200, 'Product retrieved successfully', data);
-  } catch (error) { next(error); }
+    const product = await productService.getProductById(req.params.id);
+    return successResponse(res, 200, 'Product retrieved successfully', product);
+  } catch (error) {
+    next(error);
+  }
 };
 
-exports.create = async (req, res, next) => {
+exports.updateProduct = async (req, res, next) => {
   try {
-    const data = await productService.create(req.body);
-    return successResponse(res, 201, 'Product created successfully', data);
-  } catch (error) { next(error); }
+    const product = await productService.updateProduct(req.params.id, req.body, req.user.id, req.user.role);
+    return successResponse(res, 200, 'Product updated successfully', product);
+  } catch (error) {
+    next(error);
+  }
 };
 
-exports.update = async (req, res, next) => {
+exports.updateApprovalStatus = async (req, res, next) => {
   try {
-    const data = await productService.update(req.params.id, req.body);
-    if (!data) return res.status(404).json({ success: false, message: 'Not found' });
-    return successResponse(res, 200, 'Product updated successfully', data);
-  } catch (error) { next(error); }
+    const product = await productService.updateApprovalStatus(req.params.id, req.body.approvalStatus);
+    return successResponse(res, 200, 'Product approval status updated', product);
+  } catch (error) {
+    next(error);
+  }
 };
 
-exports.delete = async (req, res, next) => {
+exports.deleteProduct = async (req, res, next) => {
   try {
-    const data = await productService.delete(req.params.id);
-    if (!data) return res.status(404).json({ success: false, message: 'Not found' });
-    return successResponse(res, 200, 'Product deleted successfully', null);
-  } catch (error) { next(error); }
+    await productService.deleteProduct(req.params.id, req.user.id, req.user.role);
+    return successResponse(res, 200, 'Product deleted successfully');
+  } catch (error) {
+    next(error);
+  }
 };
