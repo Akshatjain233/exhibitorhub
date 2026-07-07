@@ -54,6 +54,7 @@ const bookmarkRoutes = require('./routes/bookmarkRoutes');
 const faqRoutes = require('./routes/faqRoutes');
 const notificationRoutes = require('./routes/notificationRoutes');
 const dashboardRoutes = require('./routes/dashboardRoutes');
+const analyticsRoutes = require('./routes/analyticsRoutes');
 
 // Mount Routes
 app.use('/api/v1/auth', authRoutes);
@@ -74,6 +75,7 @@ app.use('/api/v1/bookmarks', bookmarkRoutes);
 app.use('/api/v1/faqs', faqRoutes);
 app.use('/api/v1/notifications', notificationRoutes);
 app.use('/api/v1/dashboard', dashboardRoutes);
+app.use('/api/v1/analytics', analyticsRoutes);
 app.use('/api/v1/exhibitors', exhibitorRoutes);
 app.use('/api/v1/products', productRoutes);
 app.use('/api/v1/sessions', sessionRoutes);
