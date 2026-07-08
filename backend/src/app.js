@@ -55,6 +55,8 @@ const notificationRoutes = require('./routes/notificationRoutes');
 const dashboardRoutes = require('./routes/dashboardRoutes');
 const analyticsRoutes = require('./routes/analyticsRoutes');
 const reportRoutes = require('./routes/reportRoutes');
+const postRoutes = require('./routes/postRoutes');
+const followRoutes = require('./routes/followRoutes');
 
 // Mount Routes
 app.use('/api/v1/auth', authRoutes);
@@ -67,8 +69,6 @@ app.use('/api/v1/floormaps', floorMapRoutes);
 app.use('/api/v1/visitors', visitorRoutes);
 app.use('/api/v1/registrations', registrationRoutes);
 app.use('/api/v1/qrpasses', qrPassRoutes);
-app.use('/api/v1/sponsors', sponsorRoutes);
-app.use('/api/v1/announcements', announcementRoutes);
 app.use('/api/v1/leads', leadRoutes);
 app.use('/api/v1/meetings', meetingRoutes);
 app.use('/api/v1/bookmarks', bookmarkRoutes);
@@ -77,6 +77,8 @@ app.use('/api/v1/notifications', notificationRoutes);
 app.use('/api/v1/dashboard', dashboardRoutes);
 app.use('/api/v1/analytics', analyticsRoutes);
 app.use('/api/v1/reports', reportRoutes);
+app.use('/api/v1/posts', postRoutes);
+app.use('/api/v1/follows', followRoutes);
 app.use('/api/v1/exhibitors', exhibitorRoutes);
 app.use('/api/v1/products', productRoutes);
 app.use('/api/v1/sessions', sessionRoutes);
