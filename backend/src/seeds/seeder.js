@@ -17,9 +17,26 @@ const ROLES = require('../constants/roles');
 const path = require('path');
 dotenv.config({ path: path.join(__dirname, '../../.env') });
 
+const localVisitorEmail = process.env.DUMMY_VISITOR_EMAIL || 'user@gmail.com';
+const localVisitorPassword = process.env.DUMMY_VISITOR_PASSWORD || 'user123';
+const localExhibitorEmail = process.env.DUMMY_EXHIBITOR_EMAIL || 'exhibitor@exhibitorhub.com';
+const localExhibitorPassword = process.env.DUMMY_EXHIBITOR_PASSWORD || 'password123';
+
+const forceSeed = process.argv.includes('--force') || process.env.FORCE_SEED === 'true';
+
 const seedData = async () => {
   try {
     await connectDB();
+
+    if (!forceSeed) {
+      const dummyAccountsExist = await User.exists({
+        email: { $in: [localVisitorEmail, localExhibitorEmail] },
+      });
+      if (dummyAccountsExist) {
+        console.log('Seeded dummy accounts already exist, skipping seed (use --force to reseed).');
+        process.exit(0);
+      }
+    }
 
     // Clear DB
     await Promise.all([
@@ -31,8 +48,12 @@ const seedData = async () => {
     // Create Users
     const superAdmin = await User.create({ email: 'super@exhibitorhub.com', password: 'password123', role: ROLES.SUPER_ADMIN });
     const admin = await User.create({ email: 'admin@exhibitorhub.com', password: 'password123', role: ROLES.EXHIBITION_ADMIN });
-    const exhibitorUser = await User.create({ email: 'abb@exhibitorhub.com', password: 'password123', role: ROLES.EXHIBITOR });
-    const visitor = await User.create({ email: 'visitor@exhibitorhub.com', password: 'password123', role: ROLES.VISITOR });
+    const exhibitorUser = await User.create({ email: localExhibitorEmail, password: localExhibitorPassword, role: ROLES.EXHIBITOR });
+    const visitor = await User.create({ email: localVisitorEmail, password: localVisitorPassword, role: ROLES.VISITOR });
+
+    console.log('Seeded local login accounts:');
+    console.log(`Visitor   -> ${localVisitorEmail} / ${localVisitorPassword}`);
+    console.log(`Exhibitor -> ${localExhibitorEmail} / ${localExhibitorPassword}`);
 
     // Create Organizer & Exhibition
     const organizer = await Organizer.create({ name: 'Global Tech Events', contactEmail: 'contact@globaltech.com' });

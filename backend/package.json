@@ -4,6 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "seed": "node src/seeds/seeder.js",
+    "seed:force": "node src/seeds/seeder.js --force",
+    "seed:legacy": "node src/seed/seeder.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text } from 'react-native';
 import ExhibitorDashboardScreen from '../screens/ExhibitorDashboardScreen';
+import ExhibitorContentScreen from '../screens/ExhibitorContentScreen';
+import ExhibitorScheduleScreen from '../screens/ExhibitorScheduleScreen';
 import ExhibitorOnboardingScreen from '../screens/ExhibitorOnboardingScreen';
 import ExhibitorWizardScreen from '../screens/ExhibitorWizardScreen';
 import ExhibitorBottomNav from '../components/ExhibitorBottomNav';
@@ -15,7 +17,7 @@ export default function ExhibitorNavigator({ onLogout }: ExhibitorNavigatorProps
     currentStep: 0, // 0 = Welcome, 1-8 = Wizard Steps
   });
   
-  const [activeTab, setActiveTab] = useState('Dashboard');
+  const [activeTab, setActiveTab] = useState('Home');
 
   const advanceStep = () => {
     setOnboardingState(prev => ({ ...prev, currentStep: prev.currentStep + 1 }));
@@ -52,8 +54,16 @@ export default function ExhibitorNavigator({ onLogout }: ExhibitorNavigatorProps
 
   // Once published, allow access to Dashboard and other tabs
   const renderScreen = () => {
-    if (activeTab === 'Dashboard') {
+    if (activeTab === 'Home') {
       return <ExhibitorDashboardScreen onLogout={onLogout} />;
+    }
+
+    if (activeTab === 'Content') {
+      return <ExhibitorContentScreen />;
+    }
+
+    if (activeTab === 'Schedule') {
+      return <ExhibitorScheduleScreen />;
     }
 
     return (

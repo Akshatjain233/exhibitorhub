@@ -426,7 +426,7 @@ export default function ScheduleScreen({ onOpenDetails }: { onOpenDetails?: () =
       </ScrollView>
 
       <TouchableOpacity style={styles.fab} activeOpacity={0.85}>
-        <Feather name="calendar-plus" size={22} color="#fff" />
+        <Feather name="calendar" size={22} color="#fff" />
       </TouchableOpacity>
 
       {sheetVisible ? (

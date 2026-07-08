@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, TextInput, Image, Modal, ScrollView, SafeAreaView, Switch } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, TextInput, Image, Modal, ScrollView, Switch } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { Feather } from '@expo/vector-icons';
 
 interface Product {
@@ -420,9 +421,17 @@ const styles = StyleSheet.create({
     fontWeight: '800',
     color: '#111',
   },
+  modalCancel: {
+    paddingVertical: 4,
+    paddingHorizontal: 8,
+  },
   modalCancelText: {
     fontSize: 16,
     color: '#ff3b30',
+  },
+  modalSave: {
+    paddingVertical: 4,
+    paddingHorizontal: 8,
   },
   modalSaveText: {
     fontSize: 16,

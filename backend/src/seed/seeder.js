@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
+const path = require('path');
 const connectDB = require('../config/db');
 
 const User = require('../models/User');
@@ -8,7 +9,12 @@ const Product = require('../models/Product');
 const Session = require('../models/Session');
 const Activity = require('../models/Activity');
 
-dotenv.config({ path: '../../.env' });
+dotenv.config({ path: path.join(__dirname, '../../.env') });
+
+const localVisitorEmail = process.env.DUMMY_VISITOR_EMAIL || 'user@gmail.com';
+const localVisitorPassword = process.env.DUMMY_VISITOR_PASSWORD || 'user123';
+const localExhibitorEmail = process.env.DUMMY_EXHIBITOR_EMAIL || 'exhibitor@exhibitorhub.com';
+const localExhibitorPassword = process.env.DUMMY_EXHIBITOR_PASSWORD || 'password123';
 
 const exhibitorsData = [
   {
@@ -102,6 +108,11 @@ const importData = async () => {
     await Activity.deleteMany();
 
     const createdExhibitors = await Exhibitor.insertMany(exhibitorsData);
+
+    await User.create([
+      { email: localVisitorEmail, password: localVisitorPassword, role: 'visitor' },
+      { email: localExhibitorEmail, password: localExhibitorPassword, role: 'exhibitor' }
+    ]);
     
     const productsWithExhibitor = productsData.map(p => ({
       ...p,

@@ -9,10 +9,10 @@ interface ExhibitorBottomNavProps {
 }
 
 const tabs = [
-  { id: 'Dashboard', icon: 'grid', label: 'Dashboard' },
-  { id: 'Products', icon: 'box', label: 'Products' },
-  { id: 'Media', icon: 'image', label: 'Media' },
-  { id: 'Analytics', icon: 'bar-chart-2', label: 'Analytics' },
+  { id: 'Home', icon: 'home', label: 'Home' },
+  { id: 'Content', icon: 'folder', label: 'Content' },
+  { id: 'Schedule', icon: 'calendar', label: 'Schedule' },
+  { id: 'Notifications', icon: 'bell', label: 'Notifications' },
   { id: 'Profile', icon: 'user', label: 'Profile' },
 ];
 
